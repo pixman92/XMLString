@@ -1,4 +1,4 @@
-// file for the OOP version of XML_String
+    // file for the OOP version of XML_String
 
 
 // How it works!
@@ -102,13 +102,13 @@ class XMLString {
     // ================================
 
     changeInner(searchTerm, newInner) {
-        indexArray = [];
+        this.indexArray = [];
         this.bigJoin();
         this.bigSplit();
 
-        searchIt(searchTerm);
+        this.searchIt(searchTerm);
 
-        var holdingIndex = indexArray[0];
+        var holdingIndex = this.indexArray[0];
 
         console.log("holding:", holdingIndex);
 
@@ -150,7 +150,7 @@ class XMLString {
 
                 console.log('I\'m erasing from here ', hodlingForRemovalIndex[0], 'to here: ', hodlingForRemovalIndex[1]);
 
-                this.singleXMLString.splice(i, 1);
+                this.singleXMLString.splice(hodlingForRemovalIndex[0], 1);
             }
         }
     }
@@ -200,7 +200,7 @@ class XMLString {
 
         if (beforeAfterWithin == 'within') {
             try {
-                this.singleXMLString.splice(this.indexArray[0] + 2, 0, madeUpXML);
+                this.singleXMLString.splice(this.indexArray[0] + 1, 0, madeUpXML);
             } catch (err) {
                 console.error(err);
             }
