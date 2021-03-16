@@ -24,6 +24,11 @@ class XMLString {
     // string
     // array
     standardXML(tag, inner, stringMe) {
+
+        if(typeof(inner)=='object'){
+            console.error("Inner Data as been idenitfied as an Object!\nMake sure to use JSON.Stringify!");
+        }
+
         var tmpXMLString = [];
         tmpXMLString[0] = '<' + tag + '>';
         tmpXMLString[1] = inner;
@@ -269,6 +274,13 @@ class XMLString {
     }
 
 
+    //================================
+    parse(str) {
+        this.singleXMLString = str;    
+    }
+
+
+    //================================  
     // /////////////////////////
     printXML() {
         console.log(this.singleXMLString);
