@@ -31,6 +31,7 @@ Other mentionaliables
   - `myXML.removeBySearch(searchTerm, removeMoreThanOne)`
   - `myXML.removeByIndex(index, range)`
   - `myXML.searchIt(search)`
+  - `myXML.parse(XMLstring)`
   - `myXML.printXML()`
   
   
