@@ -45,7 +45,7 @@ class XMLString {
     }
 
 
-    //================================
+    // ================================
     // add after id
     addToXMLString(tag, inner, beforeAfterWithin, searchTerm) {
         // !!!!IMPORTANT!!!!! - first step to making XML String
@@ -202,9 +202,10 @@ class XMLString {
 
 
     // ================================
-    
+
     indexArray = []; // holding indexes to be used in 'changeInner()'
-    searchIt(search, range) {
+    pairedArray = []; //to hold the pairs of ranges to be used
+    searchIt(search, multipair) {
 
         // to search within the array that is XML
         // returning all Array <elements> within <range> of XML
@@ -218,37 +219,59 @@ class XMLString {
 
         var endIt = true;
 
-        for (var i = 0; i < this.singleXMLString.length; i++) {
-            debugger;
+        for (var i = 0; i < this.singleXMLString.length; i++) { // debugger;
             if (this.singleXMLString[i] == '<' + search + '>') {
                 console.log('Found you!!! --- at index', i);
                 this.indexArray.push(i);
-                debugger;
-                endIt=true;
-                for (var ii = i; endIt == true; ii++) {
-                    debugger;
+                // debugger;
+                endIt = true;
+                for (var ii = i; endIt == true; ii++) { // debugger;
                     if (this.singleXMLString[ii] == '</' + search + '>') {
                         console.log('end of search!: ', ii);
 
                         this.indexArray.push(ii);
-                        endIt=false;
+                        endIt = false;
                     }
                     // i=ii;
-                    debugger;
+                    // debugger;
                 }
             }
         }
-        var pulledOutArray = [];
-        for (var j = this.indexArray[0]; j <= this.indexArray[1]; j++) {
-            console.log(j);
-            pulledOutArray.push(this.singleXMLString[j]);
+        // var pulledOutArray = [];
+        // for (var j = this.indexArray[0]; j <= this.indexArray[1]; j++) {
+        //     console.log(j);
+        //     pulledOutArray.push(this.singleXMLString[j]);
 
+        // }
+
+        // console.log(pulledOutArray);
+
+        // input: 2 4 14 16
+        // ouput: [2, 4], [14, 16]
+
+
+        this.pairedArray = [];
+        var ii = 0;
+        for (var i = 0; i < this.indexArray.length; i++) {
+            console.log('i ', i);
+            ii = i;
+            ii++;
+            this.pairedArray.push([
+                this.indexArray[i], this.indexArray[ii]
+            ]);
+            i++;
         }
 
-        console.log(pulledOutArray);
+        console.log('this.pairedArray ', this.pairedArray);
 
+        if (this.pairedArray.length > 1 && multipair > 0) {
+            console.error('Multiple pairs found, redo search with desired Range ');
+        } else {
+            return this.pairedArray[multipair-1];
+        }
 
-        return pulledOutArray;
+        console.log('this.pairedArray ', this.pairedArray[multipair-1]);
+        return this.pairedArray[multipair-1];
     }
 
 
