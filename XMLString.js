@@ -30,9 +30,14 @@ class XMLString {
         }
 
         var tmpXMLString = [];
-        tmpXMLString[0] = '<' + tag + '>';
-        tmpXMLString[1] = inner;
-        tmpXMLString[2] = '</' + tag + '>';
+        if(tag){
+            tmpXMLString[0] = '<' + tag + '>';
+            tmpXMLString[1] = inner;
+            tmpXMLString[2] = '</' + tag + '>';
+        }else if(tag==""){
+            tmpXMLString[0] = inner;
+
+        }
         if (stringMe == 'string') {
             console.log('Now a String');
             return tmpXMLString.join('');
@@ -165,7 +170,7 @@ class XMLString {
             this.singleXMLString.splice(hodlingForRemovalIndex[0], 1);
             console.log('Removed!');
         } else {
-            console.error('You have selected only a 3 part Tag - to be removed');
+            console.error('You have selected only a 3 part Tag - to be remove. If this is the desired effect, redo command with "False" as 2nd parameter');
         }
         // return;
 
@@ -205,6 +210,7 @@ class XMLString {
 
     indexArray = []; // holding indexes to be used in 'changeInner()'
     pairedArray = []; //to hold the pairs of ranges to be used
+    rangeStr = ""; //holds the string of the Range - between pairedArray[0] & pairedArray[1]
     searchIt(search, multipair) {
 
         // to search within the array that is XML
@@ -267,8 +273,15 @@ class XMLString {
         if (this.pairedArray.length > 1 && multipair > 0) {
             console.error('Multiple pairs found, redo search with desired Range ');
         } else {
-            return this.pairedArray[multipair-1];
+            console.log(this.pairedArray[multipair-1]);
         }
+
+        // var rangeStr = this.singleXMLString[this.indexArray[0]] + this.singleXMLString[this.indexArray[0]+1] + this.singleXMLString[this.indexArray[1]]; 
+        this.rangeStr = "";
+        for(var i=this.indexArray[0]; i<=this.indexArray[1]; i++){
+            this.rangeStr += this.singleXMLString[i];
+        }
+        console.log('this.singleXMLString ', this.rangeStr);
 
         console.log('this.pairedArray ', this.pairedArray[multipair-1]);
         return this.pairedArray[multipair-1];
