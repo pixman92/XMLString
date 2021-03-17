@@ -160,7 +160,7 @@ class XMLString {
         var hodlingForRemovalIndex = this.indexArray;
 
         console.log('holding:', hodlingForRemovalIndex);
-
+        
 
         // only precede if: [1]-[0] >= 2
         if (removeMoreThanOne == false && hodlingForRemovalIndex[1] - hodlingForRemovalIndex[0] <= 3) {
