@@ -160,7 +160,7 @@ class XMLString {
         var hodlingForRemovalIndex = this.indexArray;
 
         console.log('holding:', hodlingForRemovalIndex);
-        
+
 
         // only precede if: [1]-[0] >= 2
         if (removeMoreThanOne == false && hodlingForRemovalIndex[1] - hodlingForRemovalIndex[0] <= 3) {
@@ -279,9 +279,11 @@ class XMLString {
         // var rangeStr = this.singleXMLString[this.indexArray[0]] + this.singleXMLString[this.indexArray[0]+1] + this.singleXMLString[this.indexArray[1]]; 
         this.rangeStr = "";
         for(var i=this.indexArray[0]; i<=this.indexArray[1]; i++){
-            this.rangeStr += this.singleXMLString[i];
+            this.rangeStr += (this.singleXMLString[i]);
         }
-        console.log('this.singleXMLString ', this.rangeStr);
+
+        this.rangeStr = this.rangeStr.split(/(?<=>)|(?=<)/g);
+        console.log('this.rangeStr ', this.rangeStr);
 
         console.log('this.pairedArray ', this.pairedArray[multipair-1]);
         return this.pairedArray[multipair-1];
