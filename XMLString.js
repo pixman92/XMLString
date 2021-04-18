@@ -144,6 +144,7 @@ class XMLString{
         console.log("holding:", holdingIndex);
 
         this.singleXMLString[holdingIndex + 1] = newInner;
+        this.singleXMLString[holdingIndex + 2]= '</'+searchTerm+'>';
 
         console.log(this.singleXMLString);
     }
