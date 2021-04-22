@@ -353,7 +353,7 @@ class XMLString {
             this.returnedArray.push(arrayToPass[ii]);
         }
 
-        console.log(this.returnedArray);
+        console.log("this.returnedArray...\n", this.returnedArray);
 
         return this.returnedArray;
     }
