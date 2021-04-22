@@ -398,9 +398,9 @@ class XMLString {
     }
 
 
-    range(star, end, array){
+    range(start, end, array){
         var returned=[]
-        for(var i=0 i<=end; i++){
+        for(var i=start; i<=end; i++){
             returned.push(array[i])
         }
         return returned;
