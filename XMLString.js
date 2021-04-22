@@ -398,6 +398,16 @@ class XMLString {
     }
 
 
+    range(star, end, array){
+        var returned=[]
+        for(var i=0 i<=end; i++){
+            returned.push(array[i])
+        }
+        return returned;
+    }
+        
+
+
 
     // ================================
     parse(str) {
