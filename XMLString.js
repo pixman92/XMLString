@@ -423,7 +423,3 @@ class XMLString {
 // create XML to handle objs
 // make standard new XML tags with option to add after first instance of <searched term>
 // file for the OOP version of XML_String
-
-// TODO
-// create XML to handle objs
-// make standard new XML tags with option to add after first instance of <searched term>
