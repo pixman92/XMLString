@@ -94,7 +94,7 @@ class XMLString {
         this.bigJoin();
         this.bigSplit();
 
-        console.log('singleXMLstring', this.singleXMLString);
+        console.log('singleXMLString', this.singleXMLString);
         return this.singleXMLString;
     }
 
