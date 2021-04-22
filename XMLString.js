@@ -10,7 +10,7 @@
 // -search for specific Tag Data
 
 
-class XMLString{
+class XMLString {
     constructor(rootForXML) {
         this.rootForXML = rootForXML;
     }
@@ -25,16 +25,16 @@ class XMLString{
     // array
     standardXML(tag, inner, stringMe) {
 
-        if (typeof(inner) == 'object') {
+        if (typeof (inner) == 'object') {
             console.error("Inner Data as been idenitfied as an Object!\nMake sure to use JSON.Stringify!");
         }
 
         var tmpXMLString = [];
-        if(tag){
+        if (tag) {
             tmpXMLString[0] = '<' + tag + '>';
             tmpXMLString[1] = inner;
             tmpXMLString[2] = '</' + tag + '>';
-        }else if(tag==""){
+        } else if (tag == "") {
             tmpXMLString[0] = inner;
 
         }
@@ -139,14 +139,19 @@ class XMLString{
 
         this.searchIt(searchTerm);
 
+        // debugger;
+
         var holdingIndex = this.indexArray[0];
 
         console.log("holding:", holdingIndex);
 
         this.singleXMLString[holdingIndex + 1] = newInner;
-        this.singleXMLString[holdingIndex + 2]= '</'+searchTerm+'>';
+
+        this.singleXMLString[holdingIndex + 2] = '</' + searchTerm + '>';
+
 
         console.log(this.singleXMLString);
+        // debugger;
     }
 
     // ================================
@@ -274,72 +279,125 @@ class XMLString{
         if (this.pairedArray.length > 1 && multipair > 0) {
             console.error('Multiple pairs found, redo search with desired Range Paramater, eg. 1 Or 2 or 3...');
         } else {
-            console.log(this.pairedArray[multipair-1]);
+            console.log(this.pairedArray[multipair - 1]);
         }
 
         // var rangeStr = this.singleXMLString[this.indexArray[0]] + this.singleXMLString[this.indexArray[0]+1] + this.singleXMLString[this.indexArray[1]]; 
         this.rangeStr = "";
-        for(var i=this.indexArray[0]; i<=this.indexArray[1]; i++){
+        for (var i = this.indexArray[0]; i <= this.indexArray[1]; i++) {
             this.rangeStr += (this.singleXMLString[i]);
         }
 
         this.rangeStr = this.rangeStr.split(/(?<=>)|(?=<)/g);
         console.log('this.rangeStr ', this.rangeStr);
 
-        console.log('this.pairedArray ', this.pairedArray[multipair-1]);
-        return this.pairedArray[multipair-1];
+        console.log('this.pairedArray ', this.pairedArray[multipair - 1]);
+        return this.pairedArray[multipair - 1];
     }
 
     //================================
-    searchForParticalMatch(searchTerm, searchingStr){
+    searchForParticalMatch(searchTerm, searchingStr) {
         //finds the text within text
         //eg - time | timer 
         //run | runner
-        var reg = ("/^.*"+searchingStr+".*$/g");
-    
-        var found = reg.match(searchTerm);
-        return found;    
-    }
+        var reg = ("/^.*" + searchingStr + ".*$/g");
 
+        var found = reg.match(searchTerm);
+        return found;
+    }
     
     //================================
+    
+    returnedArray = [];
+    searchRepeat(searchTerm, arrayToPass, needSplit) {
 
-    foundArray = []; foundArrayIndexes=[]; returnedMiddleSearch = [];
-    searchTagsInXMLString(searchTerm){
+        // to search within the arrayToPass that is XML
+        // returning all Array <elements> within <range> of XML
+
+        // dumps FOUND indexes into 'indexArray' (global) - can be used anywhere
+
+        if(needSplit){
+            arrayToPass = arrayToPass.split(/(?<=>)|(?=<)/g);
+        }
+
+
+        var indexFromSearch = [];
+        var endIt = true;
+
+        for (var i = 0; i < arrayToPass.length; i++) { // debugger;
+            // console.log(arrayToPass.length);
+            if (arrayToPass[i] == '<' + searchTerm + '>') {
+                console.log('Found you!!! --- at index', i);
+                indexFromSearch.push(i);
+                // debugger;
+                endIt = true;
+                for (var ii = i; endIt == true; ii++) { // debugger;
+                    if (arrayToPass[ii] == '</' + searchTerm + '>') {
+                        console.log('end of search!: ', ii);
+
+                        indexFromSearch.push(ii);
+                        endIt = false;
+                    }
+                    // i=ii;
+                    // debugger;
+                }
+            }
+        }
+        console.log("indexFromSearch", indexFromSearch);
+
+        var ii = 0;
+        console.log('beginning?', indexFromSearch[0]);
+        console.log('ending?', indexFromSearch[indexFromSearch.length - 1]);
+        for (var ii = indexFromSearch[0]; ii <= indexFromSearch[indexFromSearch.length - 1]; ii++) {
+            // console.log(ii);
+            this.returnedArray.push(arrayToPass[ii]);
+        }
+
+        console.log(this.returnedArray);
+
+        return this.returnedArray;
+    }
+
+
+
+    //================================
+
+    foundArray = []; foundArrayIndexes = []; returnedMiddleSearch = [];
+    searchTagsInXMLString(searchTerm) {
         //searching through items of XMLSring by using REGex from this.searchForParticalMatch()
         //eg
         //email1, email2, email3, email4
         //search 'email' = will return all values within
-      
-        this.foundArray = []; this.foundArrayIndexes=[];
-            
+
+        this.foundArray = []; this.foundArrayIndexes = [];
+
         this.bigJoin(); this.bigSplit();
-        this.singleXMLString.forEach((item, index)=>{
+        this.singleXMLString.forEach((item, index) => {
             this.foundArray.push(this.searchForParticalMatch(searchTerm, item));
-            console.log('item', item); 
+            console.log('item', item);
         });
 
-        var j=0;
-        for(var i=0; i<this.singleXMLString.length; i++){
-            if(this.foundArray[i]!=null){
+        var j = 0;
+        for (var i = 0; i < this.singleXMLString.length; i++) {
+            if (this.foundArray[i] != null) {
                 this.foundArrayIndexes.push(i);
                 // console.log('j', j); 
                 // this.returnedMiddleSearch.push(this.foundArrayIndexes[j])
                 // debugger;
             }
         }
-        for(var i=0; i<this.foundArrayIndexes.length; i++){
-            this.returnedMiddleSearch.push(this.singleXMLString[this.foundArrayIndexes[i]+1]);          //realy cool line of code! - takes the Array[indexes of Non-null, from previous For loop], then take those indexes and plug into BIG String
+        for (var i = 0; i < this.foundArrayIndexes.length; i++) {
+            this.returnedMiddleSearch.push(this.singleXMLString[this.foundArrayIndexes[i] + 1]);          //realy cool line of code! - takes the Array[indexes of Non-null, from previous For loop], then take those indexes and plug into BIG String
             i++;
             // debugger;
         }
-        console.log('returnedMiddleSearch', this.returnedMiddleSearch); 
+        console.log('returnedMiddleSearch', this.returnedMiddleSearch);
 
         // debugger;
         return this.foundArrayIndexes;
     }
 
-    
+
 
     // ================================
     parse(str) {
